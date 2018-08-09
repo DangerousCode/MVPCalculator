@@ -1,81 +1,128 @@
 import java.io.*;
-import java.util.List;
+import java.util.*;
 
 public class FileManager {
 
-    public boolean validFileExpressions(List<File> files) {
+    private List<File> files;
+
+    public FileManager(List<File> files) {
+        this.files = files;
+    }
+
+    public boolean validFileExpressions() {
 
         for (File file :
                 files) {
 
-            BufferedReader br = null;
+            if (file.isFile()) {
 
-            try {
-                br = new BufferedReader(new FileReader(file));
-                //We need to know what kind of match is
-                String matchType = br.readLine();
+                BufferedReader br = null;
 
-                String currentLine;
-                while ((currentLine = br.readLine()) != null) {
-                    String[] splitted = currentLine.split(";");
+                try {
+                    br = new BufferedReader(new FileReader(file));
+                    //We need to know what kind of match is
+                    String matchType = br.readLine();
 
-                    if (splitted.length < 8 || splitted.length > 8) {
-                        br.close();
-                        return false;
+                    String currentLine;
+                    while ((currentLine = br.readLine()) != null) {
+                        String[] splitted = currentLine.split(";");
+
+                        if (splitted.length < 8 || splitted.length > 8) {
+                            br.close();
+                            return false;
 
 
-                    } else if (!splitted[3].equals("Team A")
-                            && !splitted[3].equals("Team B")) {
-                        br.close();
-                        return false;
+                        } else if (!splitted[3].equals("Team A")
+                                && !splitted[3].equals("Team B")) {
+                            br.close();
+                            return false;
 
-                    } else if (!splitted[5].matches("\\d+")) {
-                        br.close();
-                        return false;
-                    } else if (!splitted[6].matches("\\d+")) {
-                        br.close();
-                        return false;
-                    } else if (!splitted[7].matches("\\d+")) {
-                        br.close();
-                        return false;
+                        } else if (!splitted[5].matches("\\d+")) {
+                            br.close();
+                            return false;
+                        } else if (!splitted[6].matches("\\d+")) {
+                            br.close();
+                            return false;
+                        } else if (!splitted[7].matches("\\d+")) {
+                            br.close();
+                            return false;
+                        }
+
+                        switch (matchType) {
+                            case "basketball":
+                                if (!splitted[4].equals("G")
+                                        && !splitted[4].equals("F")
+                                        && !splitted[4].equals("C")) {
+                                    br.close();
+                                    return false;
+                                }
+                                break;
+                            case "handball":
+                                if (!splitted[4].equals("G")
+                                        && !splitted[4].equals("F")) {
+                                    br.close();
+                                    return false;
+                                }
+                                break;
+                        }
+
                     }
 
-                    switch (matchType) {
-                        case "basketball":
-                            if (!splitted[4].equals("G")
-                                    && !splitted[4].equals("F")
-                                    && !splitted[4].equals("C")) {
-                                br.close();
-                                return false;
-                            }
-                            break;
-                        case "handball":
-                            if (!splitted[4].equals("G")
-                                    && !splitted[4].equals("F")) {
-                                br.close();
-                                return false;
-                            }
-                            break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (br != null) {
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("Could not open writer");
                     }
-
                 }
 
+            }
+        }
+        return true;
+    }
+
+    public Map<String, List<File>> splitFilesBySport() {
+
+        Map<String, List<File>> mapSportsSplitted = new HashMap<>();
+
+        for (File file :
+                files) {
+
+            BufferedReader reader = null;
+
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                String matchType = reader.readLine();
+
+                if (mapSportsSplitted.containsKey(matchType))
+                    mapSportsSplitted.get(matchType).add(file);
+                else
+                    mapSportsSplitted.put(matchType, new ArrayList<>(Arrays.asList(new File[]{file})));
+
+                reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                if(br != null){
+                if(reader != null){
                     try {
-                        br.close();
+                        reader.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    System.out.println("Could not open writer");
+                    System.out.println("Reader is null");
                 }
             }
+
         }
 
-        return true;
+        return mapSportsSplitted;
     }
 
     public void writeMVP(Player mvp) {
@@ -84,7 +131,7 @@ public class FileManager {
 
         try {
             StringBuilder strToWrite = new StringBuilder("The MVP is: ");
-            if(mvp instanceof BasketPlayer){
+            if (mvp instanceof BasketPlayer) {
                 printWriter = new PrintWriter("MVP basketball.txt", "UTF-8");
                 appendStdDataToSB(strToWrite, mvp);
                 strToWrite.append("\n\tScored Points:");
@@ -94,7 +141,7 @@ public class FileManager {
                 strToWrite.append("\n\tAssists: ");
                 strToWrite.append(((BasketPlayer) mvp).getAssists());
                 printWriter.println(strToWrite.toString());
-            }else if(mvp instanceof HandballPlayer){
+            } else if (mvp instanceof HandballPlayer) {
                 printWriter = new PrintWriter("MVP handball.txt", "UTF-8");
                 appendStdDataToSB(strToWrite, mvp);
                 strToWrite.append("\n\tScored Points:");
@@ -112,7 +159,7 @@ public class FileManager {
 
     }
 
-    private void appendStdDataToSB(StringBuilder sb, Player player){
+    private void appendStdDataToSB(StringBuilder sb, Player player) {
 
         sb.append("\nName: ");
         sb.append(player.getName());
