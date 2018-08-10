@@ -103,7 +103,7 @@ public class FileManager {
                 if (mapSportsSplitted.containsKey(matchType))
                     mapSportsSplitted.get(matchType).add(file);
                 else
-                    mapSportsSplitted.put(matchType, new ArrayList<>(Arrays.asList(new File[]{file})));
+                    mapSportsSplitted.put(matchType, new ArrayList<File>(Arrays.asList(new File[]{file})));
 
                 reader.close();
             } catch (IOException e) {
@@ -132,7 +132,7 @@ public class FileManager {
         try {
             StringBuilder strToWrite = new StringBuilder("The MVP is: ");
             if (mvp instanceof BasketPlayer) {
-                printWriter = new PrintWriter("MVP basketball.txt", "UTF-8");
+                printWriter = new PrintWriter(new FileOutputStream(new File("MVP Basket.txt")));
                 appendStdDataToSB(strToWrite, mvp);
                 strToWrite.append("\n\tScored Points:");
                 strToWrite.append(((BasketPlayer) mvp).getScoredPoints());
@@ -142,7 +142,7 @@ public class FileManager {
                 strToWrite.append(((BasketPlayer) mvp).getAssists());
                 printWriter.println(strToWrite.toString());
             } else if (mvp instanceof HandballPlayer) {
-                printWriter = new PrintWriter("MVP handball.txt", "UTF-8");
+                printWriter = new PrintWriter(new FileOutputStream(new File(("MVP Handball.txt"))));
                 appendStdDataToSB(strToWrite, mvp);
                 strToWrite.append("\n\tScored Points:");
                 strToWrite.append(((HandballPlayer) mvp).getGoalMade());
