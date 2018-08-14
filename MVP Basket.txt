@@ -1,7 +1,0 @@
-The MVP is: 
-Name: player 4
-Nick: nick4
-Number: 16
-	Scored Points:40
-	Rebounds: 50
-	Assists: 0

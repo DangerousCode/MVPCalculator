@@ -1,6 +1,0 @@
-The MVP is: 
-Name: Alvaro
-Nick: nick4
-Number: 16
-	Scored Points:50
-	Goal Received: 0
