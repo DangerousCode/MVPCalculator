@@ -68,4 +68,15 @@ public class Player {
     public void setTotalPoints(int totalPoints) {
         this.totalPoints = totalPoints;
     }
+
+    public void appendStdDataToSB(StringBuilder sb, Player player) {
+
+        sb.append("\nName: ");
+        sb.append(player.getName());
+        sb.append("\nNick: ");
+        sb.append(player.getNick());
+        sb.append("\nNumber: ");
+        sb.append(player.getNumber());
+
+    }
 }

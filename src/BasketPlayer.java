@@ -64,16 +64,14 @@ public class BasketPlayer extends Player {
 
     @Override
     public String toString() {
-        return "BasketPlayer{" +
-                "scoredPoints='" + scoredPoints + '\'' +
-                ", rebounds='" + rebounds + '\'' +
-                ", assists='" + assists + '\'' +
-                ", name='" + this.getName() + '\'' +
-                ", nick='" + this.getNick() + '\'' +
-                ", number='" + this.getNumber() + '\'' +
-                ", team='" + this.getTeam() + '\'' +
-                ", position='" + this.getPosition() + '\'' +
-                ", totalPoints=" + totalPoints +
-                '}';
+        StringBuilder strToWrite = new StringBuilder("The MVP is: ");
+        appendStdDataToSB(strToWrite, this);
+        strToWrite.append("\n\tScored Points:");
+        strToWrite.append(this.getScoredPoints());
+        strToWrite.append("\n\tRebounds: ");
+        strToWrite.append(this.getRebounds());
+        strToWrite.append("\n\tAssists: ");
+        strToWrite.append(this.getAssists());
+        return strToWrite.toString();
     }
 }

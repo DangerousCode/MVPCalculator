@@ -130,25 +130,13 @@ public class FileManager {
         PrintWriter printWriter = null;
 
         try {
-            StringBuilder strToWrite = new StringBuilder("The MVP is: ");
+
             if (mvp instanceof BasketPlayer) {
                 printWriter = new PrintWriter(new FileOutputStream(new File("MVP Basket.txt")));
-                appendStdDataToSB(strToWrite, mvp);
-                strToWrite.append("\n\tScored Points:");
-                strToWrite.append(((BasketPlayer) mvp).getScoredPoints());
-                strToWrite.append("\n\tRebounds: ");
-                strToWrite.append(((BasketPlayer) mvp).getRebounds());
-                strToWrite.append("\n\tAssists: ");
-                strToWrite.append(((BasketPlayer) mvp).getAssists());
-                printWriter.println(strToWrite.toString());
+                printWriter.println(mvp.toString());
             } else if (mvp instanceof HandballPlayer) {
                 printWriter = new PrintWriter(new FileOutputStream(new File(("MVP Handball.txt"))));
-                appendStdDataToSB(strToWrite, mvp);
-                strToWrite.append("\n\tScored Points:");
-                strToWrite.append(((HandballPlayer) mvp).getGoalMade());
-                strToWrite.append("\n\tGoal Received: ");
-                strToWrite.append(((HandballPlayer) mvp).getGoalReceived());
-                printWriter.println(strToWrite.toString());
+                printWriter.println(mvp.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -156,17 +144,6 @@ public class FileManager {
             printWriter.close();
         }
 
-
-    }
-
-    private void appendStdDataToSB(StringBuilder sb, Player player) {
-
-        sb.append("\nName: ");
-        sb.append(player.getName());
-        sb.append("\nNick: ");
-        sb.append(player.getNick());
-        sb.append("\nNumber: ");
-        sb.append(player.getNumber());
 
     }
 

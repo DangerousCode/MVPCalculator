@@ -58,16 +58,13 @@ public class HandballPlayer extends Player {
 
     @Override
     public String toString() {
-        return "HandballPlayer{" +
-                ", name='" + this.getName() + '\'' +
-                ", nick='" + this.getNick() + '\'' +
-                "initialRatingPoints='" + initialRatingPoints + '\'' +
-                ", goalMade='" + goalMade + '\'' +
-                ", goalReceived='" + goalReceived + '\'' +
-                ", number='" + this.getNumber() + '\'' +
-                ", team='" + this.getTeam() + '\'' +
-                ", position='" + this.getPosition() + '\'' +
-                ", totalPoints=" + totalPoints +
-                '}';
+        StringBuilder strToWrite = new StringBuilder();
+        strToWrite.append("The MVP is: ");
+        appendStdDataToSB(strToWrite, this);
+        strToWrite.append("\n\tScored Points:")
+                .append(this.getGoalMade())
+                .append("\n\tGoal Received: ")
+                .append(this.getGoalReceived());
+        return strToWrite.toString();
     }
 }

@@ -5,16 +5,11 @@ import java.util.List;
 public class League {
 
     private String leagueType;
-    private String leagueTypeStr;
     private List<Match> matches;
     private Player mvp;
 
     public League(String leagueType) {
         this.leagueType = leagueType;
-    }
-
-    public String getLeagueTypeStr() {
-        return leagueTypeStr;
     }
 
     public String getLeagueType() {
@@ -72,7 +67,6 @@ public class League {
                     switch (this.leagueType) {
                         //For basketball
                         case "basketball":
-                            leagueTypeStr = "Basketball";
                             if (splitted[3].equals("Team A")) {
 
                                 BasketPlayer player = new BasketPlayer(splitted[0], splitted[1], splitted[2], splitted[3],
@@ -94,7 +88,6 @@ public class League {
 
                         //For handball
                         case "handball":
-                            leagueTypeStr = "Handball";
                             if (splitted[3].equals("Team A")) {
 
                                 HandballPlayer player = new HandballPlayer(splitted[0], splitted[1], splitted[2], splitted[3],
